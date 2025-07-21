@@ -1,0 +1,51 @@
+<!-- residents/templates/residents/paiements.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Paiements - Foyer Babel</title>
+    {% include 'residents/head.html' %}
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'residents/sidebar.html' %}
+            <div class="col-lg-10 px-4">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <h1 class="h3 mb-0 text-gray-800">Paiements</h1>
+                </nav>
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Effectuer un paiement</h6>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="montant" class="form-label">Montant (FCFA)</label>
+                                        <input type="number" class="form-control" id="montant" name="montant" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="mode" class="form-label">Mode de paiement</label>
+                                        <select class="form-select" id="mode" name="mode_paiement" required>
+                                            <option value="rib">RIB</option>
+                                            <option value="edina">Carte Edina</option>
+                                            <option value="especes">Espèces</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="preuve" class="form-label">Preuve de paiement</label>
+                                        <input type="file" class="form-control" id="preuve" name="preuve">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

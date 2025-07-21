@@ -1,0 +1,38 @@
+<!-- residents/templates/residents/reglements.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Règlement Intérieur - Foyer Babel</title>
+    {% include 'residents/head.html' %}
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'residents/sidebar.html' %}
+            <div class="col-lg-10 px-4">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <h1 class="h3 mb-0 text-gray-800">Règlement Intérieur</h1>
+                </nav>
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Règles du foyer</h6>
+                            </div>
+                            <div class="card-body">
+                                <h5>Horaires d’entrée</h5>
+                                <p>Porte fermée à 23h sauf dérogation.</p>
+                                <h5>Propreté</h5>
+                                <p>Chaque résident participe au nettoyage hebdomadaire.</p>
+                                <h5>Silence</h5>
+                                <p>Respect du calme après 22h.</p>
+                                <a href="#" class="btn btn-primary">Télécharger le PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

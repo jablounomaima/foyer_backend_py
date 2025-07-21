@@ -1,0 +1,139 @@
+/* ==================== STYLISATION DE LA PAGE PROFIL ==================== */
+
+/* Espacement général */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+}
+
+.card-header {
+    background-color: #4e73df;
+    color: white;
+    border-bottom: none;
+    padding: 16px 24px;
+}
+
+.card-header .font-weight-bold {
+    font-weight: 600 !important;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Style des labels et champs du formulaire */
+form p {
+    margin-bottom: 1rem;
+}
+
+form label {
+    display: block;
+    font-weight: 600;
+    color: #5a5c69;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="date"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 1px solid #d1d3e2;
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fdfdff;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Messages d'erreur Django */
+ul.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+}
+
+ul.errorlist li {
+    color: #e74a3b;
+    font-size: 0.875rem;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+/* Bouton "Changer la photo" stylisé */
+.btn-primary {
+    background-color: #4e73df;
+    border: none;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #3a5ec0;
+}
+
+/* Aperçu de la photo de profil */
+#profilePreview {
+    object-fit: cover;
+    border: 3px solid #4e73df;
+    transition: transform 0.3s ease;
+}
+
+#profilePreview:hover {
+    transform: scale(1.05);
+}
+
+/* Zone d'upload de photo */
+.text-muted {
+    font-size: 0.875rem;
+}
+
+/* Bouton Enregistrer */
+.btn-primary[type="submit"] {
+    padding: 10px 24px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.btn-primary[type="submit"]:hover {
+    background-color: #2c4bb5;
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .d-flex.align-items-center {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .me-3 {
+        margin-right: 0 !important;
+        margin-bottom: 1rem;
+    }
+
+    form label {
+        font-size: 0.95rem;
+    }
+}

@@ -1,0 +1,48 @@
+<!-- residents/templates/residents/demandes.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Mes Demandes - Foyer Babel</title>
+    {% include 'residents/head.html' %}
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'residents/sidebar.html' %}
+            <div class="col-lg-10 px-4">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <h1 class="h3 mb-0 text-gray-800">Mes Demandes</h1>
+                </nav>
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Soumettre une demande</h6>
+                            </div>
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="type" class="form-label">Type de demande</label>
+                                        <select class="form-select" id="type" name="type" required>
+                                            <option>Plomberie</option>
+                                            <option>Électricité</option>
+                                            <option>Nettoyage</option>
+                                            <option>Autre</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="desc" class="form-label">Description</label>
+                                        <textarea class="form-control" id="desc" name="description" rows="4" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

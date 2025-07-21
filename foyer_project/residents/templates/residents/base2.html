@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Foyer Babel{% endblock %}</title>
+
+    <!-- Bootstrap CSS (lien corrigé sans espace) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap @5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+
+    <!-- Votre CSS personnalisé -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base2.css' %}">
+
+    <!-- Feuille de style spécifique à la page (optionnel) -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+
+            <!-- ==================== SIDEBAR ==================== -->
+            <div class="col-lg-2 px-0 sidebar">
+                <div class="text-center py-4">
+                    <h4 class="text-white mb-0">FOYER BABEL</h4>
+                </div>
+                <div class="px-3 py-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img id="sidebarProfileImg"
+                             src="{% if user.photo %}{{ user.photo.url }}{% else %}https://ui-avatars.com/api/?name={{ user.get_full_name|urlencode }}&background=random{% endif %}"
+                             alt="Avatar"
+                             class="rounded-circle profile-img me-3">
+                        <div>
+                            <h6 class="text-white mb-0">{{ user.get_full_name }}</h6>
+                            <small class="text-white-50">Résident - Chambre {{ user.chambre }}</small>
+                        </div>
+                    </div>
+                    <hr class="border-light my-4">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" 
+                               href="{% url 'dashboard' %}">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'profil' %}active{% endif %}" 
+                               href="{% url 'profil' %}">
+                                <i class="fas fa-fw fa-user"></i>
+                                Mon profil
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'chambre' %}active{% endif %}" 
+                               href="{% url 'chambre' %}">
+                                <i class="fas fa-fw fa-bed"></i>
+                                Ma chambre
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'paiements' %}active{% endif %}" 
+                               href="{% url 'paiements' %}">
+                                <i class="fas fa-fw fa-money-bill-wave"></i>
+                                Paiements
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'demandes' %}active{% endif %}" 
+                               href="{% url 'demandes' %}">
+                                <i class="fas fa-fw fa-tools"></i>
+                                Mes demandes
+                                {% if user.demandes_en_cours > 0 %}
+                                    <span class="badge bg-danger notification-badge">{{ user.demandes_en_cours }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'annonces' %}active{% endif %}" 
+                               href="{% url 'annonces' %}">
+                                <i class="fas fa-fw fa-bullhorn"></i>
+                                Annonces
+                                {% if user.annonces_non_lues > 0 %}
+                                    <span class="badge bg-warning notification-badge">{{ user.annonces_non_lues }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'reglements' %}active{% endif %}" 
+                               href="{% url 'reglements' %}">
+                                <i class="fas fa-fw fa-file-alt"></i>
+                                Règlement intérieur
+                            </a>
+                        </li>
+                       
+
+
+
+                        
+                    </ul>
+                </div>
+            </div>
+
+          <!-- ==================== MAIN CONTENT ==================== -->
+<main class="col-lg-10 offset-lg-2">
+   
+
+    <!-- Contenu des pages -->
+    <div class="main-content px-4">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+    <!-- Bootstrap JS -->
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap @5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script global : mise à jour des images de profil -->
+    <script>
+        function updateProfileImages(src) {
+            const sidebarImg = document.getElementById('sidebarProfileImg');
+            const navbarImg = document.getElementById('navbarProfileImg');
+            if (sidebarImg) sidebarImg.src = src;
+            if (navbarImg) navbarImg.src = src;
+        }
+    </script>
+
+    <!-- Scripts spécifiques à la page -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,262 @@
+/* ==================== RÉINITIALISATION & POLICES ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #444;
+    overflow-x: hidden;
+}
+
+/* ==================== SIDEBAR GAUCHE FIXE ==================== */
+.sidebar {
+    background: linear-gradient(180deg, #4e73df 0%, #224abe 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100vh;
+    padding: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .text-center h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: white;
+}
+
+.sidebar hr {
+    border-color: rgba(255, 255, 255, 0.1);
+    margin: 1rem auto;
+    width: 80%;
+}
+
+/* Avatar profil dans le sidebar */
+.sidebar .profile-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.sidebar .profile-img:hover {
+    border-color: white;
+    transform: scale(1.05);
+}
+
+.sidebar small.text-white-50 {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Menu de navigation */
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px 15px;
+    margin: 4px 0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.sidebar .nav-link i {
+    width: 24px;
+    text-align: center;
+    margin-right: 10px;
+    font-size: 0.95rem;
+}
+
+.sidebar .nav-link:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(2px);
+}
+
+.sidebar .nav-link.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.15);
+    font-weight: 600;
+    border-left: 3px solid white;
+    margin-left: -3px;
+}
+
+/* Badge de notification (ex: demandes, annonces) */
+.sidebar .notification-badge {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    border-radius: 10px;
+}
+
+/* ==================== TOPBAR (Navbar supérieur) ==================== */
+.topbar {
+    position: fixed;
+    left: 240px;
+    right: 0;
+    top: 0;
+    z-index: 999;
+    height: 60px;
+    background: #fff;
+    box-shadow: 0 0.15rem 1.75rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    transition: left 0.3s ease;
+}
+
+.topbar .h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #444;
+}
+
+/* Icônes dans le topbar */
+.topbar .nav-link {
+    color: #5a5a5a !important;
+    position: relative;
+}
+
+.topbar .nav-link i {
+    font-size: 1.1rem;
+}
+
+/* Badges de compteur */
+.topbar .badge-counter {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+}
+
+.badge.bg-danger.badge-counter {
+    color: #e74a3b;
+}
+
+.badge.bg-success.badge-counter {
+    color: #1cc88a;
+}
+
+/* Séparateur vertical */
+.topbar-divider {
+    width: 1px;
+    background-color: #e3e6f0;
+    height: calc(100% - 20px);
+    margin: auto;
+}
+
+/* Image du profil dans le topbar */
+.topbar .img-profile {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border: 2px solid #4e73df;
+    transition: all 0.3s ease;
+}
+
+.topbar .img-profile:hover {
+    border-color: #1a3da0;
+    transform: rotate(5deg) scale(1.05);
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    border-radius: 0.35rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border: none;
+    font-size: 0.9rem;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+}
+
+.dropdown-item i {
+    width: 20px;
+    color: #858796;
+    margin-right: 10px;
+}
+
+.dropdown-divider {
+    margin: 0.3rem 0;
+    border-top: 1px solid #eaecf4;
+}
+
+/* ==================== CONTENU PRINCIPAL ==================== */
+.main-content {
+    margin-left: 240px; /* Pour éviter le chevauchement avec le sidebar */
+    padding: 70px 20px 40px;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+}
+
+/* ==================== RESPONSIVE (Tablette & Mobile) ==================== */
+
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1050;
+    }
+
+    .topbar, .main-content {
+        left: 0;
+        margin-left: 0;
+    }
+
+    /* Optionnel : ajouter une classe .toggled via JS pour afficher le sidebar */
+    body.sidebar-toggled .sidebar {
+        transform: translateX(0);
+    }
+
+    body.sidebar-toggled .main-content,
+    body.sidebar-toggled .topbar {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .topbar {
+        padding: 0 1rem;
+    }
+
+    .topbar .h3 {
+        font-size: 1.1rem;
+    }
+
+    .navbar-nav .mx-1 {
+        margin-left: 0.25rem !important;
+    }
+
+    .badge-counter {
+        transform: scale(0.9);
+    }
+}

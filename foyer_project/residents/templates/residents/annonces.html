@@ -1,0 +1,42 @@
+<!-- residents/templates/residents/annonces.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Annonces - Foyer Babel</title>
+    {% include 'residents/head.html' %}
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'residents/sidebar.html' %}
+            <div class="col-lg-10 px-4">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <h1 class="h3 mb-0 text-gray-800">Annonces</h1>
+                </nav>
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Dernières annonces</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h5>Nettoyage des espaces communs</h5>
+                                    <small class="text-muted">Publié le 15 octobre 2023</small>
+                                    <p>Un nettoyage général est prévu ce vendredi de 14h à 16h.</p>
+                                </div>
+                                <hr>
+                                <div class="mb-4">
+                                    <h5>Réunion des résidents</h5>
+                                    <small class="text-muted">Publié le 14 octobre 2023</small>
+                                    <p>Réunion lundi prochain à 18h dans la salle commune.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

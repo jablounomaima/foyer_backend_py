@@ -1,0 +1,37 @@
+<!-- residents/templates/residents/chambre.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Ma Chambre - Foyer Babel</title>
+    {% include 'residents/head.html' %}
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'residents/sidebar.html' %}
+            <div class="col-lg-10 px-4">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <h1 class="h3 mb-0 text-gray-800">Ma Chambre</h1>
+                    <!-- Topbar nav -->
+                </nav>
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Informations sur ma chambre</h6>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Numéro :</strong> B12</p>
+                                <p><strong>Type :</strong> Simple</p>
+                                <p><strong>Localisation :</strong> Bloc B, Étage 1</p>
+                                <p><strong>Équipements :</strong> Lit, Bureau, Armoire, Prise USB</p>
+                                <button class="btn btn-primary">Demander un changement</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
