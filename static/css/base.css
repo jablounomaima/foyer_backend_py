@@ -1,0 +1,19 @@
+.sidebar {
+    background: linear-gradient(180deg, #4e73df 0%, #224abe 100%);
+    min-height: 100vh;
+}
+.profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0.15rem 1.75rem rgba(58, 59, 69, 0.15);
+}
+.main-content {
+    margin-left: 260px;
+    padding: 20px;
+}

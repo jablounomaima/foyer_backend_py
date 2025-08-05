@@ -1,0 +1,22 @@
+<!-- residents/templates/residents/room_reservation.html -->
+{% extends "residents/base.html" %}
+{% block page_title %}Réserver une chambre{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5 class="mb-0">Demander une chambre</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Soumettre la demande</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

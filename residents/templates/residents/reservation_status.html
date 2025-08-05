@@ -1,0 +1,40 @@
+<!-- residents/templates/residents/reservation_status.html -->
+{% extends "residents/base.html" %}
+{% block page_title %}Statut de la réservation{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5 class="mb-0">Statut de votre réservation</h5>
+            </div>
+            <div class="card-body">
+                {% if reservation %}
+                    <p><strong>Type de chambre :</strong> {{ reservation.get_room_type_display }}</p>
+                    <p><strong>Statut :</strong> {{ reservation.get_status_display }}</p>
+                    <p><strong>Demandée le :</strong> {{ reservation.requested_at|date:"d M Y H:i" }}</p>
+                    
+                    {% if reservation.status == 'approved' %}
+                        <p class="text-danger">
+                            <strong>Délai de paiement :</strong> {{ reservation.payment_deadline|date:"d M Y H:i" }}
+                        </p>
+                        <a href="{% url 'make_payment' reservation.id %}" class="btn btn-success">
+                            Effectuer le paiement
+                        </a>
+                    {% elif reservation.status == 'paid' %}
+                        <div class="alert alert-success">Réservation confirmée !</div>
+                    {% elif reservation.status == 'cancelled' %}
+                        <div class="alert alert-warning">Réservation annulée.</div>
+                    {% else %}
+                        <div class="alert alert-info">En attente d'approbation par l'administrateur.</div>
+                    {% endif %}
+                {% else %}
+                    <p>Vous n'avez aucune demande de réservation active.</p>
+                    <a href="{% url 'room_reservation' %}" class="btn btn-primary">Demander une chambre</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

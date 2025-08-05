@@ -1,0 +1,32 @@
+<!-- residents/templates/residents/make_payment.html -->
+{% extends "residents/base.html" %}
+{% block page_title %}Effectuer le paiement{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5 class="mb-0">Paiement de la réservation</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Montant à payer :</strong> {{ reservation.get_price }} FCFA (loyer) + {{ reservation.get_deposit }} FCFA (dépôt) = <strong>{{ reservation.get_price|add:reservation.get_deposit }} FCFA</strong></p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="payment_method">Méthode de paiement</label>
+                        <select name="payment_method" id="payment_method" class="form-control" required>
+                            <option value="">-- Choisir --</option>
+                            <option value="edinar">Carte e-dinar</option>
+                            <option value="rib">Virement RIB</option>
+                            <option value="mobile_money">Mobile Money</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Payer maintenant</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

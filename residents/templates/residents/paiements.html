@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiements - Foyer Babel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"  rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #858796;
+        }
+        body {
+            background-color: #f8f9fc;
+        }
+        .sidebar {
+            background: linear-gradient(180deg, var(--primary-color) 0%, #224abe 100%);
+            min-height: 100vh;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+        .payment-method {
+            margin-bottom: 20px;
+        }
+        .payment-method img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2 px-0 sidebar">
+                <div class="text-center py-4">
+                    <h4 class="text-white">FOYER BABEL</h4>
+                </div>
+                <div class="px-3 py-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="https://ui-avatars.com/api/?name=Jabloun+Oumaima&background=random" alt="Avatar" class="rounded-circle profile-img me-3">
+                        <div>
+                            <h6 class="text-white mb-0">Jabloun Oumaima</h6>
+                            <small class="text-white-50">Résident - Chambre B12</small>
+                        </div>
+                    </div>
+                    <hr class="border-light my-4">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="dashboard-resident.html">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"> 
+                                <i class="fas fa-fw fa-money-bill-wave"></i>
+                                Paiements
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="profil.html">
+                                <i class="fas fa-fw fa-user"></i>
+                                Mon profil
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="chambre.html">
+                                <i class="fas fa-fw fa-bed"></i>
+                                Ma chambre
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="demandes.html">
+                                <i class="fas fa-fw fa-tools"></i>
+                                Mes demandes
+                                <span class="badge bg-danger notification-badge">3</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="resident/annonces.html">
+                                <i class="fas fa-fw fa-bullhorn"></i>
+                                Annonces
+                                <span class="badge bg-warning notification-badge">2</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="reglements.html">
+                                <i class="fas fa-fw fa-file-alt"></i>
+                                Règlement intérieur
+                            </a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-warning" href="#">
+                                <i class="fas fa-fw fa-sign-out-alt"></i>
+                                Déconnexion
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-10 px-4">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <div class="d-flex justify-content-between w-100">
+                        <h1 class="h3 mb-0 text-gray-800">Paiements</h1>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown">
+                                    <i class="fas fa-bell fa-fw"></i>
+                                    <span class="badge bg-danger badge-counter">3+</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                    <span class="badge bg-success badge-counter">1</span>
+                                </a>
+                            </li>
+                            <div class="topbar-divider d-none d-sm-block"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Jabloun Oumaima</span>
+                                    <img class="img-profile rounded-circle" src="https://ui-avatars.com/api/?name=Jabloun+Oumaima&background=random" width="40">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <!-- Payment Form -->
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Effectuer un paiement</h6>
+                            </div>
+                            <div class="card-body">
+                                <form id="paymentForm">
+                                    <!-- Montant à payer -->
+                                    <div class="mb-3">
+                                        <label for="montant" class="form-label">Montant à payer</label>
+                                        <input type="number" class="form-control" id="montant" placeholder="Exemple : 15000 FCFA" required>
+                                    </div>
+
+                                    <!-- Mode de paiement -->
+                                    <div class="mb-3">
+                                        <label for="modePaiement" class="form-label">Mode de paiement</label>
+                                        <select class="form-select" id="modePaiement" required>
+                                            <option value="">Sélectionnez un mode de paiement</option>
+                                            <option value="rib">RIB (Relevé d'Identité Bancaire)</option>
+                                            <option value="edina">Carte Edina</option>
+                                            <option value="especes">Espèces</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Preuve de paiement -->
+                                    <div id="preuvePaiement" class="mb-3 d-none">
+                                        <label for="preuveInput" class="form-label">Ajouter une preuve de paiement</label>
+                                        <div class="d-flex align-items-center">
+                                            <img id="preuvePreview" src="#" alt="Preuve de paiement" class="me-3" width="100" height="100"> 
+                                            <div>
+                                                <label for="preuveInput" class="btn btn-sm btn-primary">Ajouter une preuve</label>
+                                                <input type="file" id="preuveInput" accept="image/*" hidden>
+                                                <p class="text-muted mt-2">Formats autorisés : JPG, PNG</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bouton Soumettre -->
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="submit" class="btn btn-primary">Confirmer le paiement</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
+
+    <!-- Script pour gérer les preuves de paiement -->
+    <script>
+        // Élément pour prévisualiser l'image
+        const preuvePreview = document.getElementById('preuvePreview');
+        const preuveInput = document.getElementById('preuveInput');
+
+        // Gestion de l'upload de l'image
+        preuveInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preuvePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Élément pour le mode de paiement
+        const modePaiementSelect = document.getElementById('modePaiement');
+        const preuveSection = document.getElementById('preuvePaiement');
+
+        // Afficher ou masquer la section de preuve selon le mode de paiement
+        modePaiementSelect.addEventListener('change', function () {
+            const selectedValue = this.value;
+
+            if (selectedValue === 'rib' || selectedValue === 'edina') {
+                preuveSection.classList.remove('d-none');
+            } else if (selectedValue === 'especes') {
+                preuveSection.classList.add('d-none');
+            }
+        });
+    </script>
+</body>
+</html>

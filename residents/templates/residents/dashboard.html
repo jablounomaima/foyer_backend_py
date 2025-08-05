@@ -1,0 +1,241 @@
+<!-- residents/templates/residents/dashboard.html -->
+{% extends "residents/base.html" %}
+{% load static %}
+
+{% block title %}Tableau de Bord - Foyer Babel{% endblock %}
+{% block page_title %}Tableau de Bord{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <!-- Card 1 - Prochain paiement -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Prochain paiement</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">15 Oct 2023</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2 - Solde -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Solde actuel</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">+1 200 FCFA</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3 - Demandes en cours -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Demandes en cours</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-tools fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 4 - Annonces -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nouvelles annonces</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-bullhorn fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Graphique Paiements -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Historique des paiements</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="paymentChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progression du contrat -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Progression du contrat</h6>
+            </div>
+            <div class="card-body">
+                <h4 class="small font-weight-bold">Durée du séjour <span class="float-end">60%</span></h4>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <h4 class="small font-weight-bold">Paiements effectués <span class="float-end">80%</span></h4>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <h4 class="small font-weight-bold">Règlement signé <span class="float-end">100%</span></h4>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Dernières Annonces -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Dernières annonces</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="h6 font-weight-bold mb-0">Nettoyage des espaces communs</h5>
+                        <small class="text-muted">Aujourd'hui</small>
+                    </div>
+                    <p class="small mt-1 mb-0">Un nettoyage général est prévu ce vendredi de 14h à 16h.</p>
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="h6 font-weight-bold mb-0">Réunion des résidents</h5>
+                        <small class="text-muted">Hier</small>
+                    </div>
+                    <p class="small mt-1 mb-0">Réunion lundi prochain à 18h dans la salle commune.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dernières Demandes -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Mes dernières demandes</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Statut</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>12/10/2023</td>
+                                <td>Plomberie</td>
+                                <td><span class="badge bg-warning text-dark">En cours</span></td>
+                                <td><a href="#" class="btn btn-sm btn-primary">Voir</a></td>
+                            </tr>
+                            <tr>
+                                <td>05/10/2023</td>
+                                <td>Électricité</td>
+                                <td><span class="badge bg-success">Résolu</span></td>
+                                <td><a href="#" class="btn btn-sm btn-primary">Voir</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script>
+    // Graphique des paiements
+    const paymentCtx = document.getElementById('paymentChart').getContext('2d');
+    const paymentChart = new Chart(paymentCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct'],
+            datasets: [{
+                label: 'Paiements (FCFA)',
+                data: [35000, 35000, 35000, 35000, 35000, 35000, 35000, 35000, 35000, 0],
+                backgroundColor: '#4e73df',
+                borderColor: '#4e73df',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + ' FCFA';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
+        }
+    });
+
+    // Simulation de gestion des notifications
+    document.querySelectorAll('.dropdown-toggle').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const counter = this.querySelector('.badge-counter');
+            if (counter) {
+                counter.textContent = '0';
+                counter.classList.remove('bg-danger', 'bg-success');
+                counter.classList.add('bg-secondary');
+            }
+        });
+    });
+</script>
+{% endblock %}

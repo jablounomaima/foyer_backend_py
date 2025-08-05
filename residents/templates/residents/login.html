@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion</title>
+</head>
+<body>
+    <h2>Page de connexion de resident</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Se connecter</button>
+    </form>
+    <!-- In login.html -->
+<div class="text-center mt-3">
+    <small class="text-muted">Pas de compte ? <a href="{% url 'signup' %}">Inscrivez-vous ici</a></small>
+</div>
+</body>
+</html>
