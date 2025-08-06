@@ -184,6 +184,47 @@
         </div>
     </div>
 </div>
+<!-- residents/templates/residents/dashboard.html -->
+<!-- Carte Tarifs -->
+<div class="col-xl-12 mb-4">
+    <div class="card shadow">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Tarifs des Chambres</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Type de chambre</th>
+                            <th>Loyer mensuel (DT)</th>
+                            <th>Caution (DT)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in pricing %}
+                        <tr>
+                            <td><strong>{{ p.get_room_type_display }}</strong></td>
+                            <td>{{ p.monthly_rent }} DT</td>
+                            <td>{{ p.deposit }} DT</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Aucun tarif défini.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-info mt-3 p-2 text-center">
+                <small>
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Exemple :</strong> Pour une chambre triple, chaque personne paie 150 DT de loyer et 150 DT de caution.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 
@@ -197,7 +238,7 @@
         data: {
             labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct'],
             datasets: [{
-                label: 'Paiements (FCFA)',
+                label: 'Paiements (dt)',
                 data: [35000, 35000, 35000, 35000, 35000, 35000, 35000, 35000, 35000, 0],
                 backgroundColor: '#4e73df',
                 borderColor: '#4e73df',
@@ -211,7 +252,7 @@
                     beginAtZero: true,
                     ticks: {
                         callback: function(value) {
-                            return value + ' FCFA';
+                            return value + ' dt';
                         }
                     }
                 }

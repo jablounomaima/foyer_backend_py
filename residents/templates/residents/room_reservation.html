@@ -3,12 +3,43 @@
 {% block page_title %}Réserver une chambre{% endblock %}
 
 {% block content %}
+
+
+<!-- residents/templates/residents/room_reservation.html -->
+
 <div class="row justify-content-center">
-    <div class="col-lg-6">
-        <div class="card shadow">
+    <div class="col-lg-8">
+        <!-- Tarifs -->
+        <div class="card shadow mb-4">
             <div class="card-header">
-                <h5 class="mb-0">Demander une chambre</h5>
+                <h5 class="mb-0">Tarifs des chambres</h5>
             </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Type</th>
+                                <th>Loyer (DT)</th>
+                                <th>Caution (DT)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in pricing %}
+                            <tr>
+                                <td>{{ p.get_room_type_display }}</td>
+                                <td>{{ p.monthly_rent }}</td>
+                                <td>{{ p.deposit }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulaire de réservation -->
+        <div class="card shadow">
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
@@ -19,4 +50,27 @@
         </div>
     </div>
 </div>
+
+
+{% block extra_js %}
+<script>
+    // Charger les tarifs dynamiquement
+    fetch('/resident/tarifs/')
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            document.getElementById('pricing-table').innerHTML = doc.querySelector('.table-responsive').innerHTML;
+        });
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
 {% endblock %}

@@ -2,6 +2,8 @@ from django import forms
 from .models import Resident
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django import forms
+from .models import Payment
 # residents/forms.py
 
 from django import forms
@@ -54,4 +56,22 @@ class ResidentSignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')        
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')        # residents/forms.py
+
+
+class PaymentAdminForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['amount']  # Champ modifiable par l'admin
+
+# residents/forms.py
+from django import forms
+from .models import Payment
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['method', 'proof', 'notes']
+        widgets = {
+            'proof': forms.FileInput(attrs={'accept': 'image/*'}),
+        }        

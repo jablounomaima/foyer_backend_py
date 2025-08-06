@@ -2,12 +2,16 @@
 
 import os
 from pathlib import Path
+MEDIA_URL = '/media/'
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 LOGIN_URL = 'login'  # Nom de l'URL
 LOGIN_REDIRECT_URL = 'dashboard'  # Où aller après connexion
+# settings.py
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Security
 SECRET_KEY = 'your-secret-key'
 DEBUG = True

@@ -17,3 +17,11 @@
     margin-left: 260px;
     padding: 20px;
 }
+
+.card .table {
+    margin-bottom: 0;
+}
+.card .table td, .card .table th {
+    padding: 0.75rem;
+    vertical-align: middle;
+}

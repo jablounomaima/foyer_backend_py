@@ -10,20 +10,32 @@
                 <h5 class="mb-0">Paiement de la réservation</h5>
             </div>
             <div class="card-body">
-                <p><strong>Montant à payer :</strong> {{ reservation.get_price }} FCFA (loyer) + {{ reservation.get_deposit }} FCFA (dépôt) = <strong>{{ reservation.get_price|add:reservation.get_deposit }} FCFA</strong></p>
-                
-                <form method="post">
+                <!-- Affichage du montant et du délai -->
+                <p><strong>Montant total :</strong> {{ reservation.get_price|add:reservation.get_deposit }} FCFA</p>
+                <p><strong>Délai de paiement :</strong> {{ reservation.payment_deadline|date:"d M Y H:i" }}</p>
+
+                <!-- Formulaire de paiement -->
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="payment_method">Méthode de paiement</label>
-                        <select name="payment_method" id="payment_method" class="form-control" required>
+                        <label for="method">Méthode de paiement</label>
+                        <select name="method" id="method" class="form-control" required>
                             <option value="">-- Choisir --</option>
                             <option value="edinar">Carte e-dinar</option>
                             <option value="rib">Virement RIB</option>
                             <option value="mobile_money">Mobile Money</option>
+                            <option value="other">Autre</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success">Payer maintenant</button>
+                    <div class="mb-3">
+                        <label for="proof">Reçu de paiement (capture d'écran)</label>
+                        <input type="file" name="proof" id="proof" class="form-control" accept="image/*" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes">Informations complémentaires (référence de transaction, etc.)</label>
+                        <textarea name="notes" id="notes" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Envoyer le paiement</button>
                 </form>
             </div>
         </div>

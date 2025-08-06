@@ -7,14 +7,23 @@
     <div class="col-lg-8">
         <div class="card shadow">
             <div class="card-header">
-                <h5 class="mb-0">Statut de votre réservation</h5>
+                <h5 class="mb-0">Statut de votre demande</h5>
             </div>
             <div class="card-body">
                 {% if reservation %}
                     <p><strong>Type de chambre :</strong> {{ reservation.get_room_type_display }}</p>
-                    <p><strong>Statut :</strong> {{ reservation.get_status_display }}</p>
-                    <p><strong>Demandée le :</strong> {{ reservation.requested_at|date:"d M Y H:i" }}</p>
-                    
+                    <p><strong>Statut :</strong> 
+                        {% if reservation.status == 'pending' %}
+                            <span class="badge bg-warning text-white">En attente</span>
+                        {% elif reservation.status == 'approved' %}
+                            <span class="badge bg-success">Approuvée</span>
+                        {% elif reservation.status == 'rejected' %}
+                            <span class="badge bg-danger">Refusée</span>
+                        {% elif reservation.status == 'paid' %}
+                            <span class="badge bg-primary">Payée</span>
+                        {% endif %}
+                    </p>
+
                     {% if reservation.status == 'approved' %}
                         <p class="text-danger">
                             <strong>Délai de paiement :</strong> {{ reservation.payment_deadline|date:"d M Y H:i" }}
@@ -22,15 +31,34 @@
                         <a href="{% url 'make_payment' reservation.id %}" class="btn btn-success">
                             Effectuer le paiement
                         </a>
+                    {% elif reservation.status == 'rejected' %}
+                        <div class="alert alert-danger">
+                            Votre demande a été refusée. Contactez l'administration pour plus d'informations.
+                        </div>
                     {% elif reservation.status == 'paid' %}
                         <div class="alert alert-success">Réservation confirmée !</div>
-                    {% elif reservation.status == 'cancelled' %}
-                        <div class="alert alert-warning">Réservation annulée.</div>
-                    {% else %}
-                        <div class="alert alert-info">En attente d'approbation par l'administrateur.</div>
+                    {% endif %}
+
+                    <!-- Affichage du paiement -->
+                    {% if reservation.payment %}
+                        <div class="mt-4">
+                            <h6>Statut du paiement :</h6>
+                            <div class="d-flex align-items-center">
+                                {% if reservation.payment.status == 'pending' %}
+                                    <i class="fas fa-clock text-warning me-2"></i>
+                                    <span>Paiement du mois d'{{ reservation.payment.get_month_display }} en cours de traitement</span>
+                                {% elif reservation.payment.status == 'verified' %}
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span class="fw-bold">Paiement du mois d'{{ reservation.payment.get_month_display }} payé</span>
+                                {% elif reservation.payment.status == 'rejected' %}
+                                    <i class="fas fa-times-circle text-danger me-2"></i>
+                                    <span>Paiement refusé. Veuillez contacter l'administration.</span>
+                                {% endif %}
+                            </div>
+                        </div>
                     {% endif %}
                 {% else %}
-                    <p>Vous n'avez aucune demande de réservation active.</p>
+                    <p>Vous n'avez aucune demande de réservation.</p>
                     <a href="{% url 'room_reservation' %}" class="btn btn-primary">Demander une chambre</a>
                 {% endif %}
             </div>
