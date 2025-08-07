@@ -1,0 +1,149 @@
+
+{% extends "residents/base.html" %}
+{% load static %}
+
+{% block title %}Tableau de Bord - Foyer Babel{% endblock %}
+{% block page_title %}Tableau de Bord{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
+{% endblock %}
+
+{% block content %}
+            <!-- Main Content -->
+            <div class="col-lg-10 px-4">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <div class="d-flex justify-content-between w-100">
+                        <h1 class="h3 mb-0 text-gray-800">Mes Paiements</h1>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown">
+                                    <i class="fas fa-bell fa-fw"></i>
+                                    <span class="badge bg-danger badge-counter">{{ pending_payments_count }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                    <span class="badge bg-success badge-counter">1</span>
+                                </a>
+                            </li>
+                            <div class="topbar-divider d-none d-sm-block"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.first_name }}</span>
+                                    <img class="img-profile rounded-circle" 
+                                         src="https://ui-avatars.com/api/?name={{ user.get_full_name|urlencode }}&background=3b82f6&color=fff" 
+                                         width="40">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <!-- Contenu principal -->
+                <div class="main-content">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                    <h6 class="m-0 font-weight-bold text-primary">Historique des paiements</h6>
+                                    <a href="" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-plus"></i> Nouveau paiement
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    {% if paiements %}
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Type</th>
+                                                        <th>Montant</th>
+                                                        <th>Statut</th>
+                                                        <th>Preuve</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for payment in payments %}
+                                                    <tr>
+                                                        <td>{{ payment.created_at|date:"d M Y" }}</td>
+                                                        <td>{{ payment.get_payment_type_display|default:"Paiement unique" }}</td>
+                                                        <td>{{ payment.amount }} DT</td>
+                                                        <td>
+                                                            {% if payment.status == 'verified' %}
+                                                                <span class="badge bg-paid text-white">Payé</span>
+                                                            {% elif payment.status == 'pending' %}
+                                                                <span class="badge bg-pending text-dark">En attente</span>
+                                                            {% else %}
+                                                                <span class="badge bg-danger text-white">Refusé</span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if payment.proof %}
+                                                                <a href="{{ payment.proof.url }}" target="_blank" class="btn btn-sm btn-info">Voir</a>
+                                                            {% else %}
+                                                                ❌
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <p class="text-muted">Aucun paiement effectué.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Statistiques</h6>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="small font-weight-bold">Paiements effectués <span class="float-right">{{ paid_count }}</span></h4>
+                                    <div class="progress mb-4">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width:  paid_percentage " aria-valuenow="{{ paid_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <h4 class="small font-weight-bold">En attente <span class="float-right">{{ pending_count }}</span></h4>
+                                    <div class="progress mb-4">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  pending_percentage " aria-valuenow="{{ pending_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <h4 class="small font-weight-bold">Montant total payé <span class="float-right">{{ total_paid }} DT</span></h4>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle (inclut Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animation des notifications
+        document.querySelectorAll('.dropdown-toggle').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const counter = this.querySelector('.badge-counter');
+                if (counter && !counter.classList.contains('bg-secondary')) {
+                    counter.textContent = '0';
+                    counter.classList.remove('bg-danger', 'bg-success');
+                    counter.classList.add('bg-secondary');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+<!-- residents/templates/residents/payment_history.html -->
+{% extends "residents/base.html" %}
+{% block page_title %}Historique des paiements{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10">
+        <h4>Historique des paiements mensuels</h4>
+        <p>Chambre : {{ reservation.get_room_type_display }}</p>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Mois</th>
+                        <th>Montant (DT)</th>
+                        <th>Statut</th>
+                        <th>Preuve</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in months %}
+                    <tr>
+                        <td>{{ m.month }}</td>
+                        <td>{{ m.amount }} DT</td>
+                        <td>
+                            {% if m.status == 'verified' %}
+                                <span class="badge bg-success">Payé</span>
+                            {% elif m.status == 'pending' %}
+                                <span class="badge bg-warning text-dark">En attente</span>
+                            {% else %}
+                                <span class="badge bg-danger">Non payé</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.proof_url %}
+                                <a href="{{ m.proof_url }}" target="_blank" class="btn btn-sm btn-info">Voir</a>
+                            {% else %}
+                                ❌
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.can_pay %}
+                                <a href="{% url 'make_monthly_payment' reservation.id m.month|slugify m.year %}" class="btn btn-sm btn-success">Payer</a>
+                            {% else %}
+                                <button class="btn btn-sm btn-secondary" disabled>Déjà payé</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!-- residents/templates/residents/room_pricing.html -->
+{% extends "residents/base.html" %}
+{% block page_title %}Tarifs des chambres{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5 class="mb-0">Tarifs et Caution</h5>
+            </div>
+            <div class="card-body">
+                <p>Consultez les tarifs avant de soumettre une demande de réservation :</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Type de chambre</th>
+                                <th>Loyer mensuel (DT)</th>
+                                <th>Caution (DT)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in pricing %}
+                            <tr>
+                                <td>{{ p.get_room_type_display }}</td>
+                                <td>{{ p.monthly_rent }} DT</td>
+                                <td>{{ p.deposit }} DT</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+<!-- residents/templates/residents/reservation_status.html -->
+{% extends "residents/base.html" %}
+{% block page_title %}Statut de la réservation{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5 class="mb-0">Statut de votre réservation</h5>
+            </div>
+            <div class="card-body">
+                {% if reservation %}
+                    <p><strong>Type de chambre :</strong> {{ reservation.get_room_type_display }}</p>
+                    <p><strong>Section :</strong> {{ reservation.get_gender_display }}</p>
+                    <p><strong>Statut :</strong> 
+                        {% if reservation.status == 'pending' %}
+                            <span class="badge bg-warning text-white">En attente</span>
+                        {% elif reservation.status == 'approved' %}
+                            <span class="badge bg-success">Approuvée</span>
+                        {% elif reservation.status == 'rejected' %}
+                            <span class="badge bg-danger">Refusée</span>
+                        {% elif reservation.status == 'paid' %}
+                            <span class="badge bg-primary">Payée</span>
+                        {% endif %}
+                    </p>
+
+                    {% if reservation.status == 'approved' %}
+                        <p class="text-danger">
+                            <strong>Délai de paiement :</strong> {{ reservation.payment_deadline|date:"d M Y H:i" }}
+                        </p>
+                        <a href="{% url 'make_payment' reservation.id %}" class="btn btn-success">
+                            Effectuer le paiement
+                        </a>
+                    {% elif reservation.status == 'rejected' %}
+                        <div class="alert alert-danger">
+                            Votre demande a été refusée. Contactez l'administration.
+                        </div>
+                    {% elif reservation.status == 'paid' %}
+                        <div class="alert alert-success">
+                            <i class="fas fa-home"></i> <strong>Réservation confirmée !</strong> Bienvenue au Foyer Babel.
+                        </div>
+                        <p>Votre chambre vous attend. Vous recevrez les détails par email.</p>
+                    {% else %}
+                        <div class="alert alert-info">En attente d'approbation.</div>
+                    {% endif %}
+
+                    <!-- Affichage du paiement -->
+                    {% if reservation.payment %}
+                        <div class="mt-4">
+                            <h6>Preuve de paiement :</h6>
+                            <p><strong>Méthode :</strong> {{ reservation.payment.get_method_display }}</p>
+                            <p><strong>Montant :</strong> {{ reservation.payment.amount }} DT</p>
+                            <p><strong>Statut du paiement :</strong> 
+                                {% if reservation.payment.status == 'verified' %}
+                                    <span class="badge bg-success">Payé</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">En attente</span>
+                                {% endif %}
+                            </p>
+                            <p><strong>Date :</strong> {{ reservation.payment.paid_at|date:"d M Y H:i" }}</p>
+                            {% if reservation.payment.proof %}
+                                <p><strong>Justificatif :</strong></p>
+                                <a href="{{ reservation.payment.proof.url }}" target="_blank">
+                                    <img src="{{ reservation.payment.proof.url }}" width="200" class="img-thumbnail">
+                                </a>
+                            {% endif %}
+                            {% if reservation.payment.notes %}
+                                <p><strong>Notes :</strong> {{ reservation.payment.notes }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <p>Vous n'avez aucune demande de réservation.</p>
+                    <a href="{% url 'room_reservation' %}" class="btn btn-primary">Demander une chambre</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
