@@ -18,7 +18,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .signup-container {
-            max-width: 500px;
+            max-width: 600px;
             margin: 80px auto;
             padding: 2rem;
             border-radius: 10px;
@@ -36,6 +36,14 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
         }
+        .profile-img-preview {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #e9ecef;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -43,52 +51,126 @@
         <div class="signup-container">
             <div class="text-center mb-4">
                 <h4>Inscription Résident</h4>
-                <p>Bienvenue au Foyer Babel</p>
+                <p>Bienvenue au Foyer Babel — Veuillez remplir tous les champs ci-dessous.</p>
             </div>
 
             {% if form.errors %}
-                <div class="alert alert-danger">
+                <div class="alert alert-danger alert-sm">
                     <strong>Veuillez corriger les erreurs ci-dessous.</strong>
                 </div>
             {% endif %}
 
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
+
+                <!-- Nom d'utilisateur -->
                 <div class="mb-3">
                     <label for="{{ form.username.id_for_label }}" class="form-label">Nom d'utilisateur</label>
                     {{ form.username }}
                     {% if form.username.errors %}
-                        <div class="text-danger">{{ form.username.errors }}</div>
+                        <div class="text-danger small">{{ form.username.errors }}</div>
                     {% endif %}
                 </div>
+
+                <!-- Prénom -->
                 <div class="mb-3">
                     <label for="{{ form.first_name.id_for_label }}" class="form-label">Prénom</label>
                     {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <div class="text-danger small">{{ form.first_name.errors }}</div>
+                    {% endif %}
                 </div>
+
+                <!-- Nom -->
                 <div class="mb-3">
                     <label for="{{ form.last_name.id_for_label }}" class="form-label">Nom</label>
                     {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <div class="text-danger small">{{ form.last_name.errors }}</div>
+                    {% endif %}
                 </div>
+
+                <!-- Email -->
                 <div class="mb-3">
                     <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
                     {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="text-danger small">{{ form.email.errors }}</div>
+                    {% endif %}
                 </div>
+
+                <!-- Mot de passe -->
                 <div class="mb-3">
                     <label for="{{ form.password1.id_for_label }}" class="form-label">Mot de passe</label>
                     {{ form.password1 }}
-                    <small class="text-muted">Votre mot de passe doit contenir au moins 8 caractères et ne pas être trop courant.</small>
+                    <small class="text-muted">Doit contenir au moins 8 caractères, non courant.</small>
+                    {% if form.password1.errors %}
+                        <div class="text-danger small">{{ form.password1.errors }}</div>
+                    {% endif %}
                 </div>
+
+                <!-- Confirmation mot de passe -->
                 <div class="mb-3">
                     <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmer le mot de passe</label>
                     {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <div class="text-danger small">{{ form.password2.errors }}</div>
+                    {% endif %}
                 </div>
+
+                <hr>
+
+                <!-- Informations supplémentaires -->
+                <h5 class="mb-3">Informations personnelles</h5>
+
+                <!-- Téléphone -->
+                <div class="mb-3">
+                    <label for="{{ form.telephone.id_for_label }}" class="form-label">Téléphone</label>
+                    {{ form.telephone }}
+                </div>
+
+                
+
+                
+
+                
+
+               
+
+                <!-- Bouton d'inscription -->
                 <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
             </form>
 
+            <!-- Lien vers connexion -->
             <div class="text-center mt-3">
-                <small class="text-muted">Vous avez déjà un compte ? <a href="{% url 'login' %}">Connectez-vous</a></small>
+                <small class="text-muted">
+                    Vous avez déjà un compte ? 
+                    <a href="{% url 'login' %}" class="text-decoration-none">Connectez-vous</a>
+                </small>
             </div>
         </div>
     </div>
+
+    <!-- JavaScript : Prévisualisation de la photo -->
+    <script>
+        const photoInput = document.getElementById('{{ form.photo.id_for_label }}');
+        const photoPreview = document.getElementById('photoPreview');
+
+        if (photoInput) {
+            photoInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        photoPreview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

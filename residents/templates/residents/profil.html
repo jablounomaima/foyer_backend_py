@@ -1,0 +1,183 @@
+<!-- residents/templates/residents/profil.html -->
+{% extends "residents/base.html" %}
+{% load static %}
+{% block page_title %}Mon Profil{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary-color: #4e73df;
+        --secondary-color: #858796;
+        --success-color: #1cc88a;
+        --warning-color: #f6c23e;
+        --danger-color: #e74a3b;
+    }
+
+    body {
+        background-color: #f8f9fc;
+    }
+
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .form-control[readonly] {
+        background-color: #f8f9fc;
+        opacity: 1;
+    }
+
+    .btn-edit {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+    }
+
+    .btn-edit:hover {
+        background: #224abe;
+    }
+
+    .btn-save {
+        background: var(--success-color);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+    }
+
+    .btn-save:hover {
+        background: #17a870;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 offset-lg-2">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Informations personnelles</h6>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-4 text-center">
+                        <!-- Photo de profil -->
+                        <div class="d-flex flex-column align-items-center">
+                            <img id="profilePreview"
+                                 src="{% if form.photo.value %}{{ form.photo.value.url }}{% else %}https://ui-avatars.com/api/?name={{ user.get_full_name|urlencode }}&background=random{% endif %}"
+                                 alt="Photo de profil"
+                                 class="rounded-circle me-3 profile-img"
+                                 width="150" height="150">
+                            <div class="mt-3">
+                                <label for="id_photo" class="btn btn-primary btn-sm">Changer la photo</label>
+                                {{ form.photo }}
+                            </div>
+                            <p class="text-muted mt-2">Formats autorisés : JPG, PNG</p>
+                        </div>
+                    </div>
+
+                    <!-- Nom complet -->
+                    <div class="mb-3">
+                        <label for="id_first_name" class="form-label">Prénom</label>
+                        {{ form.first_name }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_last_name" class="form-label">Nom</label>
+                        {{ form.last_name }}
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email</label>
+                        {{ form.email }}
+                    </div>
+
+                    <!-- Téléphone -->
+                    <div class="mb-3">
+                        <label for="id_telephone" class="form-label">Téléphone</label>
+                        {{ form.telephone }}
+                    </div>
+
+                    <!-- Date de naissance -->
+                    <div class="mb-3">
+                        <label for="id_date_naissance" class="form-label">Date de naissance</label>
+                        {{ form.date_naissance }}
+                    </div>
+
+                    <!-- Lieu de naissance -->
+                    <div class="mb-3">
+                        <label for="id_lieu_naissance" class="form-label">Lieu de naissance</label>
+                        {{ form.lieu_naissance }}
+                    </div>
+
+                    <!-- Nationalité -->
+                    <div class="mb-3">
+                        <label for="id_nationalite" class="form-label">Nationalité</label>
+                        {{ form.nationalite }}
+                    </div>
+
+                    <!-- Université -->
+                    <div class="mb-3">
+                        <label for="id_universite" class="form-label">Université</label>
+                        {{ form.universite }}
+                    </div>
+
+                    <!-- Chambre (lecture seule) -->
+                    <div class="mb-3">
+                        <label for="chambre" class="form-label">Chambre attribuée</label>
+                        <input type="text" class="form-control" value="{{ user.chambre|default:'Non attribuée' }}" readonly>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-save">Enregistrer les modifications</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Mise à jour de l'aperçu de la photo
+    const photoInput = document.getElementById('id_photo');
+    const profilePreview = document.getElementById('profilePreview');
+    const sidebarProfileImg = document.getElementById('sidebar-profile-img');
+    const navbarProfileImg = document.getElementById('navbar-profile-img');
+
+    if (photoInput) {
+        photoInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profilePreview.src = e.target.result;
+                    if (sidebarProfileImg) sidebarProfileImg.src = e.target.result;
+                    if (navbarProfileImg) navbarProfileImg.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+</script>
+{% endblock %}

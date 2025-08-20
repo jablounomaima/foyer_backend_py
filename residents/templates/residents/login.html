@@ -1,18 +1,124 @@
+<!-- residents/templates/residents/login.html -->
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Connexion</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Foyer Babel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Style personnalisé -->
+    <style>
+        :root {
+            --primary: #4e73df;
+            --primary-dark: #224abe;
+        }
+        html, body {
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff 0%, #2d71df 100%);
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-width: 420px;
+            width: 100%;
+        }
+        .login-header {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .login-header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+        .login-body {
+            padding: 2rem;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+        }
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        .text-center a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h2>Page de connexion de resident</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Se connecter</button>
-    </form>
-    <!-- In login.html -->
-<div class="text-center mt-3">
-    <small class="text-muted">Pas de compte ? <a href="{% url 'signup' %}">Inscrivez-vous ici</a></small>
-</div>
+    <div class="login-container">
+        <div class="login-card">
+            <!-- En-tête -->
+            <div class="login-header">
+                <i class="fas fa-home fa-3x mb-3"></i>
+                <h3>Foyer Babel</h3>
+                <p class="mb-0">Espace résident</p>
+            </div>
+
+            <!-- Formulaire -->
+            <div class="login-body">
+                <h5 class="mb-4 text-center">Connexion</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Nom d'utilisateur</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger small">{{ form.username.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.password.id_for_label }}" class="form-label">Mot de passe</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <div class="text-danger small">{{ form.password.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                    </div>
+                </form>
+
+                <!-- Lien vers l'inscription -->
+                <div class="text-center mt-3">
+                    <small class="text-muted">Pas de compte ? 
+                        <a href="{% url 'signup' %}">Inscrivez-vous ici</a>
+                        <br><p><a href="{% url 'password_reset' %}">Mot de passe oublié ?</a></p>
+
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

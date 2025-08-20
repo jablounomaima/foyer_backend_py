@@ -56,6 +56,8 @@ class Resident(AbstractUser):
 
 
 class Reservation(models.Model):
+
+  
     ROOM_TYPE_CHOICES = [
         ('single', 'Simple'),
         ('double', 'Double'),
@@ -76,7 +78,12 @@ class Reservation(models.Model):
     ]
 
    
-    resident = models.ForeignKey(User, on_delete=models.CASCADE)
+    resident = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  # ✅ Référence dynamique au modèle utilisateur actuel
+        on_delete=models.CASCADE,
+        verbose_name="Résident"
+    )
+    
     room_type = models.CharField(max_length=10, choices=ROOM_TYPE_CHOICES)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     roommate_preference = models.TextField(blank=True, help_text="Préférence de colocataire (étudiant, travailleur, ou nom connu)")
@@ -117,6 +124,9 @@ class Reservation(models.Model):
 
 
 class Payment(models.Model):
+    # models.py
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     STATUS_CHOICES = [
         ('pending', 'En attente de vérification'),
         ('verified', 'Payé'),
@@ -124,6 +134,11 @@ class Payment(models.Model):
     ]
 
     reservation = models.OneToOneField(Reservation, on_delete=models.CASCADE)
+    resident = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     method = models.CharField(max_length=50)
     proof = models.ImageField(upload_to='payments/')
@@ -146,21 +161,16 @@ class Payment(models.Model):
 
 class RoomPricing(models.Model):
     ROOM_TYPE_CHOICES = [
-        ('single', 'Chambre individuelle'),
+        ('single', 'Chambre simple'),
         ('double', 'Chambre double'),
-        ('triple', 'Chambre triple'),
+        ('suite', 'Suite'),
     ]
-
-    room_type = models.CharField(max_length=10, choices=ROOM_TYPE_CHOICES, unique=True)
-    monthly_rent = models.DecimalField(max_digits=10, decimal_places=2)
-    deposit = models.DecimalField(max_digits=10, decimal_places=2)
+    room_type = models.CharField(max_length=20, choices=ROOM_TYPE_CHOICES)
+    monthly_rent = models.DecimalField(max_digits=8, decimal_places=2)
+    deposit = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         return f"{self.get_room_type_display()} - {self.monthly_rent} DT"
-    class Meta:
-        verbose_name = "Tarification des chambres"
-        verbose_name_plural = "Tarifications des chambres"    
-
 
 # residents/models.py
 
@@ -200,4 +210,38 @@ class MonthlyPayment(models.Model):
         ordering = ['-year', 'month']
 
     def __str__(self):
-        return f"{self.month} {self.year} - {self.reservation.resident.username}"
+        return f"{self.get_month_display()} {self.year} - {self.amount} DT"
+    
+
+
+
+    # residents/models.py
+from django.db import models
+
+
+    
+
+
+
+ 
+
+class ReglementImage(models.Model):
+    titre = models.CharField("Titre", max_length=100, blank=True)
+    image = models.ImageField("Image", upload_to='reglement/')
+    ordre = models.PositiveIntegerField("Ordre d'affichage", default=0)
+    mis_en_ligne = models.BooleanField("Afficher sur le site", default=True)
+
+    class Meta:
+        verbose_name = "Image du règlement intérieur"
+        verbose_name_plural = "Images du règlement intérieur"
+        ordering = ['ordre']
+
+    def __str__(self):
+        return self.titre or f"Image {self.id}"
+    
+
+
+
+
+
+    

@@ -2,22 +2,51 @@
 from django.conf import settings
 import os
 from pathlib import Path
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jabloun.omaima5102000@gmail.com'
+EMAIL_HOST_PASSWORD = '123456'  # Utilise un mot de passe d’application si 2FA activé
+DEFAULT_FROM_EMAIL = 'Foyer Babel <jabloun.omaima5102000.com>'
+
+
+
+AUTH_USER_MODEL = 'residents.Resident'
 MEDIA_URL = '/media/'
 LANGUAGE_CODE = 'fr-fr'
 USE_I18N = True
 USE_L10N = True
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+# Static & Media Files
+STATIC_URL = '/static/'
+# settings.py
+STATICFILES_DIRS = [
+    BASE_DIR / 'residents' / 'static',
+]
+
+# Dossier pour collectstatic (en production)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 LOGIN_URL = 'login'  # Nom de l'URL
 LOGIN_REDIRECT_URL = 'dashboard'  # Où aller après connexion
 # settings.py
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+MEDIA_ROOT = str(BASE_DIR / 'media') 
 # Security
 SECRET_KEY = 'your-secret-key'
 DEBUG = True
 ALLOWED_HOSTS = []
+
+
+
 
 # Apps
 INSTALLED_APPS = [
@@ -53,9 +82,9 @@ DATABASES = {
 
 # Static & Media Files
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+#MEDIA_ROOT = BASE_DIR / 'media'
 
 # Login
 LOGIN_REDIRECT_URL = '/resident/dashboard/'

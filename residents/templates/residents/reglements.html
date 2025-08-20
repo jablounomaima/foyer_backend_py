@@ -1,0 +1,40 @@
+{% extends "residents/base.html" %}
+{% block content %}
+<h1>Règlement intérieur</h1>
+
+
+
+{% if reglements %}
+
+{% for reglement in reglements %}
+  <div style="margin-bottom: 20px;">
+    <img src="{{ reglement.image.url }}" alt="{{ reglement.titre }}" width="650"><br>
+    <a href="{{ reglement.image.url }}" download="{{ reglement.titre|default:'reglement' }}.jpg" class="btn btn-success">
+      Télécharger
+    </a>
+  </div>
+{% empty %}
+  <p>Aucune image trouvée.</p>
+{% endfor %}
+
+
+
+<p>Télécharger toutes les images en ZIP</p>
+
+
+ 
+
+  <a href="{% url 'download_all_reglements' %}" class="btn btn-success" style="margin-bottom:20px;">
+    Télécharger toutes les images en ZIP
+</a>
+
+<a href="{% url 'download_all_reglements_as_jpg' %}" class="btn btn-primary" style="margin-bottom:20px;">
+    Télécharger toutes les images en JPG
+</a>
+
+
+{% else %}
+  <p>Aucune image trouvée.</p>
+{% endif %}
+
+{% endblock %}

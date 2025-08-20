@@ -1,0 +1,475 @@
+<!-- residents/templates/residents/index.html -->
+<!-- residents/templates/residents/index.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Foyer Babel - Accueil</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iGKNY8WYH+EclWHkYIpg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Style personnalisé -->
+    <style>
+        :root {
+            --primary: #4e73df;
+            --success: #1cc88a;
+            --warning: #f6c23e;
+            --danger: #e74a3b;
+        }
+
+        body {
+            background-color: #f8f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #444;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .header p.lead {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            opacity: 0.9;
+        }
+
+        .header .btn-lg {
+            font-size: 1.1rem;
+            padding: 0.75rem 2rem;
+            font-weight: 500;
+            border: none;
+        }
+
+        /* Section titles */
+        .section-title {
+            font-weight: 600;
+            color: #333;
+            margin: 3rem 0 1.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin: 12px auto 0;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Gender sections */
+        .gender-section {
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .boys-section {
+            background-color: #e3f2fd;
+            border-left: 5px solid #2196f3;
+        }
+
+        .girls-section {
+            background-color: #fce4ec;
+            border-left: 5px solid #e91e63;
+        }
+
+        .gender-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Carousel */
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* Gallery */
+        .gallery-img {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: #ddd;
+            padding: 2.5rem 0;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #a8d6ff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .header p.lead {
+                font-size: 1rem;
+            }
+            .header .btn-lg {
+                font-size: 1rem;
+                padding: 0.6rem 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Foyer Babel</h1>
+            <p class="lead">Un hébergement sécurisé, moderne et convivial pour les étudiants.</p>
+            <p>Pour réserver une chambre, connectez-vous dès maintenant.</p>
+            <a href="{% url 'login' %}" class="btn btn-light btn-lg shadow">Se connecter</a>
+        </div>
+    </header>
+    <!-- Section : Bienvenue -->
+    <section class="py-5 text-center">
+        <div class="container">
+            <h2 class="section-title">Bienvenue au Foyer Étudiant</h2>
+            <p class="lead text-muted">
+                Un espace simple et efficace pour gérer les chambres, les résidents, les paiements et plus encore.
+            </p>
+        </div>
+    </section>
+
+    <!-- Carrousel d'images -->
+    <section class="py-4">
+        <div class="container">
+            <div id="foyerCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'images/foyer_1.jpg' %}" class="d-block w-100" alt="Vue extérieure">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/foyer_2.jpg' %}" class="d-block w-100" alt="Salon commun">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/foyer_3.jpg' %}" class="d-block w-100" alt="Chambre double">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/foyer_4.jpg' %}" class="d-block w-100" alt="Cuisine">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/foyer_5.jpg' %}" class="d-block w-100" alt="Cour intérieure">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#foyerCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#foyerCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- À propos -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">À propos du Foyer</h2>
+            <p class="text-center text-muted">
+                Le Foyer Babel offre un hébergement confortable, sécurisé et moderne aux étudiants. 
+                Nous mettons un point d'honneur sur le respect, la tranquillité et la communauté.
+            </p>
+        </div>
+    </section>
+
+    <!-- Sections Garçons / Filles -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Nos Espaces Résidentiels</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="gender-section boys-section">
+                        <div class="gender-icon text-primary">
+                            <i class="fas fa-male"></i>
+                        </div>
+                        <h3>Foyer Garçons</h3>
+                        <ul class="text-start">
+                            <li>Chambres individuelles, doubles et triples</li>
+                            <li>Accès 24h/24 avec badge</li>
+                            <li>Espaces communs : salon, cuisine, étude</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="gender-section girls-section">
+                        <div class="gender-icon text-danger">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <h3>Foyer Filles</h3>
+                        <ul class="text-start">
+                            <li>Chambres individuelles, doubles et triples</li>
+                            <li>Salon féminin privé</li>
+                            <li>Départements séparés avec accès sécurisé</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- residents/templates/residents/home.html -->
+<!-- residents/templates/residents/home.html -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="text-center mb-5">🛏️ Tarifs des Chambres</h2>
+
+        {% if room_pricings %}
+            <div class="row">
+                {% for pricing in room_pricings %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm h-100 border-0">
+                            <div class="card-body text-center">
+                                <h4 class="card-title text-primary">{{ pricing.get_room_type_display }}</h4>
+                                <hr>
+                                <p class="lead mb-2">
+                                    <strong>{{ pricing.monthly_rent }} TND</strong><br>
+                                    <small class="text-muted">par mois</small>
+                                </p>
+                                <p class="text-muted small">
+                                    Dépôt : {{ pricing.deposit }} TND
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 text-center">
+                                <a href="login" class="btn btn-outline-primary btn-sm">
+                                    Réserver
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                Les tarifs ne sont pas encore disponibles.
+            </div>
+        {% endif %}
+    </div>
+</section>
+    
+
+
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">📜 Aperçu du Règlement</h2>
+
+        {% if reglements_preview %}
+            <div class="row justify-content-center">
+                {% for reglement in reglements_preview %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm border-0 position-relative">
+                            <!-- Image cliquable pour zoom -->
+                            <img src="{{ reglement.image.url }}" 
+                                 class="card-img-top" 
+                                 alt="Règlement {{ forloop.counter }}" 
+                                 style="width: 300px; height: 300px; object-fit: cover; cursor: pointer;" 
+                                 onclick="openModal('{{ reglement.image.url }}')"
+                                 title="Cliquez pour agrandir">
+
+                            <!-- Bouton de téléchargement en haut à droite -->
+                            <a href="{{ reglement.image.url }}" 
+                            download="reglement-{{ forloop.counter }}.jpg"
+                            class="btn btn-success btn-sm position-absolute" 
+                            style="top: 10px; right: 10px; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;"
+                            title="Télécharger l'image">
+                           <i class="fas fa-download"></i>
+                         </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+           
+        {% else %}
+            <div class="alert alert-info text-center">
+                Aucun règlement disponible pour le moment.
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Modale pour afficher l'image en grand -->
+    <div id="imageModal" style="display: none; position: fixed; z-index: 1050; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); text-align: center; padding: 30px;">
+        <span onclick="closeModal()" style="color: white; font-size: 40px; position: absolute; top: 20px; right: 30px; cursor: pointer; z-index: 1051;">&times;</span>
+        <img id="modalImage" style="max-width: 90%; max-height: 90%; margin-top: 50px; border-radius: 8px; object-fit: contain;">
+    </div>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Fonction appelée quand on clique sur une image en miniature
+        // Elle affiche la modale (fenêtre pop-up) avec l'image agrandie
+        function openModal(imageUrl) {
+            // 1. On récupère l'élément <img> dans la modale
+            document.getElementById('modalImage').src = imageUrl;
+            //    ↑ On change sa source (src) par l'URL de l'image cliquée
+    
+            // 2. On affiche la modale en changeant son style
+            document.getElementById('imageModal').style.display = 'block';
+            //    ↑ Par défaut, la modale est cachée (display: none)
+            //    En passant à 'block', elle devient visible
+        }
+    
+        // Fonction appelée pour fermer la modale
+        function closeModal() {
+            // On cache la modale en la remettant à "display: none"
+            document.getElementById('imageModal').style.display = 'none';
+        }
+    
+        // Ajout d'un écouteur d'événement sur la modale
+        // Objectif : fermer la modale si l'utilisateur clique sur le fond noir (pas sur l'image)
+        document.getElementById('imageModal').onclick = function(event) {
+            // event.target → l'élément qui a reçu le clic
+            // this → ici, c'est l'élément 'imageModal' (le fond noir)
+            
+            if (event.target === this) {
+                // Si le clic a eu lieu directement sur le fond (et pas sur l'image ou la croix)
+                // Alors on ferme la modale
+                closeModal();
+            }
+            // Exemple : 
+            //   - Clic sur le noir → ferme
+            //   - Clic sur l'image → ne ferme pas (car event.target !== this)
+        };
+    
+        // Ajout d'un écouteur pour le clavier
+        // Objectif : permettre de fermer la modale avec la touche "Échap" (Escape)
+        document.addEventListener('keydown', function(event) {
+            // event.key contient la touche pressée
+            if (event.key === 'Escape') {
+                // Si la touche est "Échap", on ferme la modale
+                closeModal();
+            }
+            // Cela améliore l'accessibilité : les utilisateurs au clavier peuvent fermer facilement
+        });
+    </script>
+
+    <!-- Intégration de Font Awesome pour les icônes (à mettre dans le <head> si pas déjà fait) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</section>
+
+
+
+
+    <!-- Galerie de photos -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Découvrez notre Foyer</h2>
+            <div class="row g-3">
+                <div class="col-6 col-md-4">
+                    <img src="{% static 'images/foyer_1.jpg' %}" class="gallery-img w-100" alt="Extérieur">
+                </div>
+                <div class="col-6 col-md-4">
+                    <img src="{% static 'images/foyer_2.jpg' %}" class="gallery-img w-100" alt="Salon">
+                </div>
+                <div class="col-6 col-md-4">
+                    <img src="{% static 'images/foyer_3.jpg' %}" class="gallery-img w-100" alt="Chambre">
+                </div>
+                <div class="col-6 col-md-4">
+                    <img src="{% static 'images/foyer_4.jpg' %}" class="gallery-img w-100" alt="Cuisine">
+                </div>
+                <div class="col-6 col-md-4">
+                    <img src="{% static 'images/foyer_5.jpg' %}" class="gallery-img w-100" alt="Cour">
+                </div>
+                <div class="col-6 col-md-4">
+                    <img src="{% static 'images/foyer_1.jpg' %}" class="gallery-img w-100" alt="Bâtiment">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Localisation -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Localisation</h2>
+            <div class="ratio ratio-16x9">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.755714982543!2d10.1755703!3d36.8942779!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12e2cbd919280ce3%3A0x6ed8d07a9e164aa6!2sFoyer%20babel!5e0!3m2!1sfr!2stn!4v1719391238030!5m2!1sfr!2stn" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>© 2025 Foyer Babel | Tous droits réservés</p>
+            <p>Contact : contact@foyerbabel.tn | Tél : +216 XX XXX XXX</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
