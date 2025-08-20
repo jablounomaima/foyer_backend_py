@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views  # ✅ . = residents/
 from django.conf import settings
+<<<<<<< HEAD
 from django.contrib.auth import views as auth_views
 
 from django.conf.urls.static import static
@@ -18,10 +19,22 @@ path('profil/', views.profil, name='profil'),
 path('reservation/<int:reservation_id>/payer/<str:month>/<int:year>/', 
      views.make_monthly_payment, 
      name='make_monthly_payment'),
+=======
+from django.conf.urls.static import static
+urlpatterns = [
+     path('login/', views.login_view, name='login'),
+      path('signup/', views.signup_view, name='signup'), # Add this line
+
+      path('reservation/', views.room_reservation, name='room_reservation'),
+path('reservation/status/', views.reservation_status, name='reservation_status'),
+path('reservation/<int:reservation_id>/pay/', views.make_payment, name='make_payment'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     # residents/urls.py
 path('reservation/<int:reservation_id>/pay/', views.make_payment, name='make_payment'),
     #path('profil/', views.index, name='profil'),
     #path('chambre/', views.chambre, name='chambre'),
+<<<<<<< HEAD
     path('paiements/calendrier/', views.payment_calendar, name='payment_calendar'),
  path('paiements/', views.paiements, name='paiements'),  # ✅ Ajouté    
 path('paiements/', views.payment_history, name='payment_history'),
@@ -62,4 +75,16 @@ path('tarifs/', views.room_pricing, name='room_pricing'),
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+=======
+    path('paiements/', views.paiements, name='paiements'),
+    #path('demandes/', views.demandes, name='demandes'),
+    path('annonces/', views.annonces, name='annonces'),
+    path('reglements/', views.reglements, name='reglements'),
+    # residents/urls.py
+path('tarifs/', views.room_pricing, name='room_pricing'),
+     path('reservation/', views.room_reservation, name='room_reservation'),
+]
+
+if settings.DEBUG:
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

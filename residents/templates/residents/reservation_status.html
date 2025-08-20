@@ -7,12 +7,19 @@
     <div class="col-lg-8">
         <div class="card shadow">
             <div class="card-header">
+<<<<<<< HEAD
                 <h5 class="mb-0">Statut de votre réservation</h5>
+=======
+                <h5 class="mb-0">Statut de votre demande</h5>
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
             </div>
             <div class="card-body">
                 {% if reservation %}
                     <p><strong>Type de chambre :</strong> {{ reservation.get_room_type_display }}</p>
+<<<<<<< HEAD
                     <p><strong>Section :</strong> {{ reservation.get_gender_display }}</p>
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
                     <p><strong>Statut :</strong> 
                         {% if reservation.status == 'pending' %}
                             <span class="badge bg-warning text-white">En attente</span>
@@ -34,6 +41,7 @@
                         </a>
                     {% elif reservation.status == 'rejected' %}
                         <div class="alert alert-danger">
+<<<<<<< HEAD
                             Votre demande a été refusée. Contactez l'administration.
                         </div>
                     {% elif reservation.status == 'paid' %}
@@ -43,11 +51,18 @@
                         <p>Votre chambre vous attend. Vous recevrez les détails par email.</p>
                     {% else %}
                         <div class="alert alert-info">En attente d'approbation.</div>
+=======
+                            Votre demande a été refusée. Contactez l'administration pour plus d'informations.
+                        </div>
+                    {% elif reservation.status == 'paid' %}
+                        <div class="alert alert-success">Réservation confirmée !</div>
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
                     {% endif %}
 
                     <!-- Affichage du paiement -->
                     {% if reservation.payment %}
                         <div class="mt-4">
+<<<<<<< HEAD
                             <h6>Preuve de paiement :</h6>
                             <p><strong>Méthode :</strong> {{ reservation.payment.get_method_display }}</p>
                             <p><strong>Montant :</strong> {{ reservation.payment.amount }} DT</p>
@@ -68,6 +83,21 @@
                             {% if reservation.payment.notes %}
                                 <p><strong>Notes :</strong> {{ reservation.payment.notes }}</p>
                             {% endif %}
+=======
+                            <h6>Statut du paiement :</h6>
+                            <div class="d-flex align-items-center">
+                                {% if reservation.payment.status == 'pending' %}
+                                    <i class="fas fa-clock text-warning me-2"></i>
+                                    <span>Paiement du mois d'{{ reservation.payment.get_month_display }} en cours de traitement</span>
+                                {% elif reservation.payment.status == 'verified' %}
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span class="fw-bold">Paiement du mois d'{{ reservation.payment.get_month_display }} payé</span>
+                                {% elif reservation.payment.status == 'rejected' %}
+                                    <i class="fas fa-times-circle text-danger me-2"></i>
+                                    <span>Paiement refusé. Veuillez contacter l'administration.</span>
+                                {% endif %}
+                            </div>
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
                         </div>
                     {% endif %}
                 {% else %}

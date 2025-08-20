@@ -1,4 +1,5 @@
 # foyer_babel/settings.py
+<<<<<<< HEAD
 from django.conf import settings
 import os
 from pathlib import Path
@@ -31,23 +32,39 @@ STATICFILES_DIRS = [
 # Dossier pour collectstatic (en production)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+=======
+
+import os
+from pathlib import Path
+MEDIA_URL = '/media/'
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 LOGIN_URL = 'login'  # Nom de l'URL
 LOGIN_REDIRECT_URL = 'dashboard'  # Où aller après connexion
 # settings.py
 
+<<<<<<< HEAD
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 MEDIA_ROOT = str(BASE_DIR / 'media') 
+=======
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 # Security
 SECRET_KEY = 'your-secret-key'
 DEBUG = True
 ALLOWED_HOSTS = []
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 # Apps
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -82,9 +99,15 @@ DATABASES = {
 
 # Static & Media Files
 STATIC_URL = '/static/'
+<<<<<<< HEAD
 
 MEDIA_URL = '/media/'
 #MEDIA_ROOT = BASE_DIR / 'media'
+=======
+STATICFILES_DIRS = [BASE_DIR / 'static']
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 # Login
 LOGIN_REDIRECT_URL = '/resident/dashboard/'

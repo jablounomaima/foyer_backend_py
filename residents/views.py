@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.shortcuts import render
 from .models import RoomPricing
 from .models import RoomPricing  # Importez le modèle
+<<<<<<< HEAD
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -18,6 +19,10 @@ from .models import MonthlyPayment, RoomPricing
 
 # residents/views.py
 from .models import MonthlyPayment, RoomPricing
+=======
+
+
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 from .models import Reservation
 from .forms import ProfileForm, ResidentSignupForm, ReservationForm
 # residents/views.py
@@ -38,6 +43,7 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, 'residents/login.html', {'form': form})
+<<<<<<< HEAD
 from django.contrib.auth import login
 def signup_view(request):
     if request.method == 'POST':
@@ -52,6 +58,20 @@ def signup_view(request):
         form = ResidentCreationForm()
 
     return render(request, 'residents/signup.html', {'form': form})
+=======
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = ResidentSignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect('dashboard')
+    else:
+        form = ResidentSignupForm()
+    return render(request, 'residents/signup.html', {'form': form})
+
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 # --- Vues principales ---
 
 @login_required
@@ -68,8 +88,13 @@ def profil(request):
             return redirect('profil')
     else:
         form = ProfileForm(instance=request.user)
+<<<<<<< HEAD
 
     return render(request, 'residents/profil.html', {'form': form})
+=======
+    return render(request, 'residents/profil.html', {'form': form})
+
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 # --- Vues de réservation ---
 
 # residents/views.py
@@ -130,6 +155,7 @@ from .models import Reservation, Payment
 
 # residents/views.py
 
+<<<<<<< HEAD
 # residents/views.py
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
@@ -140,6 +166,8 @@ from .models import Reservation, Payment
 
 
 # ✅ Version corrigée de make_payment
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 @login_required
 def make_payment(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id, resident=request.user)
@@ -154,6 +182,10 @@ def make_payment(request, reservation_id):
         messages.error(request, "Délai de paiement expiré. Réservation annulée.")
         return redirect('reservation_status')
 
+<<<<<<< HEAD
+=======
+    # Vérifiez s'il existe déjà un paiement
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     if hasattr(reservation, 'payment'):
         messages.warning(request, "Un paiement a déjà été soumis pour cette réservation. En attente de vérification.")
         return redirect('reservation_status')
@@ -164,6 +196,7 @@ def make_payment(request, reservation_id):
         notes = request.POST.get('notes')
 
         if method and proof:
+<<<<<<< HEAD
             # ✅ Correction : Création manuelle → il faut TOUT assigner
             payment = Payment()
             payment.reservation = reservation
@@ -202,12 +235,33 @@ def paiements(request):
         'form': form,
         'payments': payments
     })
+=======
+            Payment.objects.create(
+                reservation=reservation,
+                amount=reservation.get_price() + reservation.get_deposit(),
+                method=method,
+                proof=proof,
+                notes=notes,
+                status='pending'
+            )
+            messages.success(request, "Votre paiement a été envoyé. En attente de vérification.")
+            return redirect('reservation_status')
+        else:
+            messages.error(request, "Veuillez remplir tous les champs.")
+
+    return render(request, 'residents/make_payment.html', {'reservation': reservation})
+@login_required
+def paiements(request):
+    return render(request, 'residents/paiements.html')
+
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 @login_required
 def annonces(request):
     return render(request, 'residents/annonces.html')
 
 
 
+<<<<<<< HEAD
 from .models import ReglementImage
 
 @login_required
@@ -215,10 +269,16 @@ def reglements(request):
     print("reglements view appelée")  # Pour debug console serveur
     reglements = ReglementImage.objects.filter(mis_en_ligne=True).order_by('ordre')
     return render(request, 'residents/reglements.html', {'reglements': reglements})
+=======
+@login_required
+def reglements(request):
+    return render(request, 'residents/reglements.html')
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 
 
 
+<<<<<<< HEAD
 # residents/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -236,23 +296,32 @@ from django.contrib.auth.decorators import login_required
 from .models import Reservation
 from .forms import PaymentForm
 
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 @login_required
 def make_payment(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id, resident=request.user)
 
+<<<<<<< HEAD
     # Vérifier le statut
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     if reservation.status != 'approved':
         messages.error(request, "Le paiement n'est pas disponible pour cette réservation.")
         return redirect('reservation_status')
 
+<<<<<<< HEAD
     # Vérifier le délai
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     if timezone.now() > reservation.payment_deadline:
         reservation.status = 'cancelled'
         reservation.save()
         messages.error(request, "Délai de paiement expiré. Réservation annulée.")
         return redirect('reservation_status')
 
+<<<<<<< HEAD
     # Vérifier si un paiement existe déjà
     if hasattr(reservation, 'payment'):
         messages.warning(request, "Un paiement a déjà été soumis pour cette réservation.")
@@ -266,10 +335,26 @@ def make_payment(request, reservation_id):
             payment.resident = reservation.resident  # ✅ CORRECTION ICI
             payment.amount = reservation.get_price() + reservation.get_deposit()
             payment.save()  # ✅ Maintenant, pas d'erreur
+=======
+    if request.method == 'POST':
+        method = request.POST.get('method')
+        proof = request.FILES.get('proof')
+        notes = request.POST.get('notes')
+
+        if method and proof:
+            Payment.objects.create(
+                reservation=reservation,
+                amount=reservation.get_price() + reservation.get_deposit(),
+                method=method,
+                proof=proof,
+                notes=notes
+            )
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
             messages.success(request, "Votre paiement a été envoyé. En attente de vérification.")
             return redirect('reservation_status')
         else:
             messages.error(request, "Veuillez remplir tous les champs.")
+<<<<<<< HEAD
     else:
         form = PaymentForm()
 
@@ -285,10 +370,22 @@ def room_pricing(request):
     return render(request, 'residents/room_pricing.html', {'pricing': pricing})
 
 
+=======
+
+    return render(request, 'residents/make_payment.html', {'reservation': reservation})
+
+    # residents/views.py
+
+def room_pricing(request):
+    pricing = RoomPricing.objects.all()
+    return render(request, 'residents/room_pricing.html', {'pricing': pricing})
+
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 @login_required
 def dashboard(request):
     # Récupérer tous les tarifs
     pricing = RoomPricing.objects.all()
+<<<<<<< HEAD
     return render(request, 'residents/dashboard.html', {'pricing': pricing})
 
 
@@ -635,3 +732,6 @@ def download_all_reglements_as_jpg(request):
     return response
 
 
+=======
+    return render(request, 'residents/dashboard.html', {'pricing': pricing})
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef

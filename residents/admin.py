@@ -1,4 +1,5 @@
 # residents/admin.py
+<<<<<<< HEAD
 
 from django.contrib import admin
 from django.shortcuts import get_object_or_404
@@ -11,6 +12,16 @@ from .forms import PaymentAdminForm  # Assurez-vous que ce formulaire existe
 
 
 # =================== ADMIN RESERVATION ===================
+=======
+from datetime import timezone
+from pyexpat.errors import messages
+from django.contrib import admin
+from django.shortcuts import get_object_or_404
+from django.utils.html import format_html
+
+from residents.forms import PaymentAdminForm
+from .models import Payment, Reservation
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
@@ -23,7 +34,10 @@ class ReservationAdmin(admin.ModelAdmin):
         'payment_deadline',
         'admin_actions',
     )
+<<<<<<< HEAD
     
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     list_filter = ('status', 'room_type', 'gender', 'requested_at')
     search_fields = ('resident__first_name', 'resident__last_name', 'resident__username')
     readonly_fields = ('requested_at', 'approved_at')
@@ -45,13 +59,22 @@ class ReservationAdmin(admin.ModelAdmin):
 
     @admin.action(description='Approuver les demandes sélectionnées')
     def approve_reservations(self, request, queryset):
+<<<<<<< HEAD
+=======
+        from django.utils import timezone
+        import datetime
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
         now = timezone.now()
         count = 0
         for reservation in queryset:
             if reservation.status == 'pending':
                 reservation.status = 'approved'
                 reservation.approved_at = now
+<<<<<<< HEAD
                 reservation.payment_deadline = now + timezone.timedelta(days=3)
+=======
+                reservation.payment_deadline = now + datetime.timedelta(days=3)
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
                 reservation.save()
                 count += 1
         if count > 0:
@@ -95,6 +118,7 @@ class ReservationAdmin(admin.ModelAdmin):
             self.message_user(request, f"❌ Refusé : {reservation.resident.get_full_name()}")
         return self.response_change(request, reservation)
 
+<<<<<<< HEAD
 
 # =================== ADMIN PAYMENT ===================
 
@@ -108,16 +132,42 @@ class PaymentAdmin(admin.ModelAdmin):
     @admin.display(description='Résident')
     def display_resident(self, obj):
         return f"{obj.resident.get_full_name()} ({obj.resident.username})"
+=======
+# residents/admin.py
+from django.contrib import admin
+from django.utils.html import format_html
+from .models import Payment
+
+# residents/admin.py
+from django.contrib import admin
+from django.utils.html import format_html
+from .models import Payment
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('reservation', 'amount', 'method', 'status', 'created_at', 'proof_preview')
+    list_filter = ('status', 'method', 'created_at')
+    search_fields = ('reservation__resident__username', 'reservation__resident__first_name')
+       # ✅ Utilisez get_readonly_fields() pour ajouter des méthodes
+    def get_readonly_fields(self, request, obj=None):
+        return ['created_at', 'updated_at'] + (['proof_preview'] if obj else [])
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
     @admin.display(description='Aperçu preuve')
     def proof_preview(self, obj):
         if obj.proof:
+<<<<<<< HEAD
             return format_html(
                 '<a href="{}" target="_blank"><img src="{}" width="100" height="60" style="object-fit: cover;"></a>',
                 obj.proof.url, obj.proof.url
             )
         return "❌ Aucune"
 
+=======
+            return format_html('<a href="{}" target="_blank"><img src="{}" width="100" height="60" style="object-fit: cover;"></a>', obj.proof.url, obj.proof.url)
+        return "❌ Aucune"
+    
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     @admin.display(description='Actions')
     def admin_actions(self, obj):
         if obj.status == 'pending':
@@ -127,6 +177,10 @@ class PaymentAdmin(admin.ModelAdmin):
             )
         return "-"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     def get_urls(self):
         from django.urls import path
         urls = super().get_urls()
@@ -140,11 +194,33 @@ class PaymentAdmin(admin.ModelAdmin):
         if payment.status == 'pending':
             payment.status = 'verified'
             payment.save()
+<<<<<<< HEAD
             self.message_user(request, f"Paiement validé pour {payment.resident.get_full_name()}.")
         return self.response_change(request, payment)
 
 
 # =================== ADMIN TARIFICATION ===================
+=======
+            messages.success(request, f"Paiement validé pour {payment.reservation}.")
+        return self.response_change(request, payment)
+
+   
+
+   
+
+    
+    
+
+    
+
+   
+    
+
+
+    # residents/admin.py
+from django.contrib import admin
+from .models import RoomPricing
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 @admin.register(RoomPricing)
 class RoomPricingAdmin(admin.ModelAdmin):
@@ -155,6 +231,7 @@ class RoomPricingAdmin(admin.ModelAdmin):
 
     def get_room_type_display(self, obj):
         return obj.get_room_type_display()
+<<<<<<< HEAD
     get_room_type_display.short_description = 'Type de chambre'
 
 
@@ -326,3 +403,6 @@ def image_preview(self, obj):
     if obj.image:
         return format_html('<img src="{}" style="max-height: 50px;">', obj.image.url)
     return "Aucune image"
+=======
+    get_room_type_display.short_description = 'Type de chambre'
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef

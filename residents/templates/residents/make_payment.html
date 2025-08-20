@@ -10,11 +10,19 @@
                 <h5 class="mb-0">Paiement de la réservation</h5>
             </div>
             <div class="card-body">
+<<<<<<< HEAD
                 <p><strong>Type de chambre :</strong> {{ reservation.get_room_type_display }}</p>
                 <p><strong>Montant total :</strong> {{ reservation.get_price|add:reservation.get_deposit }} DT</p>
                 <p><strong>Détail :</strong> Loyer ({{ reservation.get_price }} DT) + Caution ({{ reservation.get_deposit }} DT)</p>
                 <p><strong>Délai de paiement :</strong> {{ reservation.payment_deadline|date:"d M Y H:i" }}</p>
 
+=======
+                <!-- Affichage du montant et du délai -->
+                <p><strong>Montant total :</strong> {{ reservation.get_price|add:reservation.get_deposit }} FCFA</p>
+                <p><strong>Délai de paiement :</strong> {{ reservation.payment_deadline|date:"d M Y H:i" }}</p>
+
+                <!-- Formulaire de paiement -->
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3">
@@ -28,12 +36,21 @@
                         </select>
                     </div>
                     <div class="mb-3">
+<<<<<<< HEAD
                         <label for="{{ form.proof.id_for_label }}">Preuve de paiement (capture)</label>
                         {{ form.proof }}
                     </div>
                     <div class="mb-3">
                         <label for="{{ form.notes.id_for_label }}">Informations complémentaires</label>
                         {{ form.notes }}
+=======
+                        <label for="proof">Reçu de paiement (capture d'écran)</label>
+                        <input type="file" name="proof" id="proof" class="form-control" accept="image/*" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes">Informations complémentaires (référence de transaction, etc.)</label>
+                        <textarea name="notes" id="notes" class="form-control" rows="3"></textarea>
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
                     </div>
                     <button type="submit" class="btn btn-success">Envoyer le paiement</button>
                 </form>

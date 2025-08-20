@@ -8,9 +8,12 @@ from .models import Payment
 
 from django import forms
 from .models import Reservation
+<<<<<<< HEAD
 from django.contrib.auth import get_user_model
 # Utilisez get_user_model() pour obtenir le modèle utilisateur actuel
 Resident = get_user_model()
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 class ReservationForm(forms.ModelForm):
     class Meta:
@@ -40,8 +43,19 @@ class ReservationForm(forms.ModelForm):
 
 
 
+<<<<<<< HEAD
 
 
+=======
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Resident
+        fields = [
+            'first_name', 'last_name', 'email',
+            'telephone', 'date_naissance', 'lieu_naissance',
+            'nationalite', 'universite', 'photo', 'chambre'
+        ]
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 
 
@@ -50,6 +64,7 @@ class ResidentSignupForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
     email = forms.EmailField(required=True)
+<<<<<<< HEAD
      # Champs supplémentaires
     telephone = forms.CharField(max_length=20, required=False, label="Téléphone")
     date_naissance = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}), label="Date de naissance")
@@ -64,6 +79,12 @@ class ResidentSignupForm(UserCreationForm):
                   'telephone', 'date_naissance', 'lieu_naissance', 
                   'nationalite', 'universite', 'photo', 
                   'password1', 'password2')
+=======
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')        # residents/forms.py
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 
 class PaymentAdminForm(forms.ModelForm):
@@ -75,16 +96,20 @@ class PaymentAdminForm(forms.ModelForm):
 from django import forms
 from .models import Payment
 
+<<<<<<< HEAD
 # residents/forms.py
 from django import forms
 from .models import Payment
 
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 class PaymentForm(forms.ModelForm):
     class Meta:
         model = Payment
         fields = ['method', 'proof', 'notes']
         widgets = {
             'proof': forms.FileInput(attrs={'accept': 'image/*'}),
+<<<<<<< HEAD
             'notes': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Référence de transaction, nom sur le compte, etc.'})
         } 
 
@@ -126,3 +151,6 @@ class ResidentCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+=======
+        }        
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef

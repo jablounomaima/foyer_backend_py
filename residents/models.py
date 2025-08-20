@@ -9,10 +9,13 @@ from django.db import models
 from django.contrib.auth.models import User
     # residents/models.py
 from django.db import models
+<<<<<<< HEAD
 from django.utils import translation
 
 from django.conf import settings
 from django.db import models
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 class Resident(AbstractUser):
     GENDER_CHOICES = [
@@ -56,8 +59,11 @@ class Resident(AbstractUser):
 
 
 class Reservation(models.Model):
+<<<<<<< HEAD
 
   
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     ROOM_TYPE_CHOICES = [
         ('single', 'Simple'),
         ('double', 'Double'),
@@ -78,12 +84,16 @@ class Reservation(models.Model):
     ]
 
    
+<<<<<<< HEAD
     resident = models.ForeignKey(
         settings.AUTH_USER_MODEL,  # ✅ Référence dynamique au modèle utilisateur actuel
         on_delete=models.CASCADE,
         verbose_name="Résident"
     )
     
+=======
+    resident = models.ForeignKey(User, on_delete=models.CASCADE)
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     room_type = models.CharField(max_length=10, choices=ROOM_TYPE_CHOICES)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     roommate_preference = models.TextField(blank=True, help_text="Préférence de colocataire (étudiant, travailleur, ou nom connu)")
@@ -124,9 +134,12 @@ class Reservation(models.Model):
 
 
 class Payment(models.Model):
+<<<<<<< HEAD
     # models.py
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     STATUS_CHOICES = [
         ('pending', 'En attente de vérification'),
         ('verified', 'Payé'),
@@ -134,11 +147,14 @@ class Payment(models.Model):
     ]
 
     reservation = models.OneToOneField(Reservation, on_delete=models.CASCADE)
+<<<<<<< HEAD
     resident = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
     
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     method = models.CharField(max_length=50)
     proof = models.ImageField(upload_to='payments/')
@@ -146,14 +162,21 @@ class Payment(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+<<<<<<< HEAD
     paid_at = models.DateTimeField(auto_now_add=True)  # ✅ Changé
+=======
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
     def __str__(self):
         return f"Paiement {self.get_status_display()} pour {self.reservation.resident}"
 
     def get_month_display(self):
+<<<<<<< HEAD
         with translation.override(settings.LANGUAGE_CODE):  # Assure que la langue est 'fr'
          return self.created_at.strftime("%B %Y")  # Ex: Août 2025
+=======
+        return self.created_at.strftime("%B %Y")  # Ex: Août 2025
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
 
 
 
@@ -161,6 +184,7 @@ class Payment(models.Model):
 
 class RoomPricing(models.Model):
     ROOM_TYPE_CHOICES = [
+<<<<<<< HEAD
         ('single', 'Chambre simple'),
         ('double', 'Chambre double'),
         ('suite', 'Suite'),
@@ -245,3 +269,23 @@ class ReglementImage(models.Model):
 
 
     
+=======
+        ('single', 'Chambre individuelle'),
+        ('double', 'Chambre double'),
+        ('triple', 'Chambre triple'),
+    ]
+
+    room_type = models.CharField(max_length=10, choices=ROOM_TYPE_CHOICES, unique=True)
+    monthly_rent = models.DecimalField(max_digits=10, decimal_places=2)
+    deposit = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.get_room_type_display()} - {self.monthly_rent} DT"
+    class Meta:
+        verbose_name = "Tarification des chambres"
+        verbose_name_plural = "Tarifications des chambres"    
+
+
+
+        
+>>>>>>> e895eca4c3f584252cf6d671c0ac4c79addbddef
